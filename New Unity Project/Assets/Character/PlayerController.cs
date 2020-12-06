@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿/*--Bugs--*
+ 
+- There is a bug with movement while aiming down sight making movement inverted 
+
+--= to Do =-- 
+
+-Create animations and speeds for mr brute
+-Add sprint and crouch
+
+*/
+using System.Collections;
 
 
 using System.Collections.Generic;
@@ -9,27 +19,36 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public CharacterController controller;
-    public Transform cam;
-
+    [Header("Movement Stats")]
     public float speed = 6;
     public float gravity = -9.81f;
     public float jumpHeight = 3;
     Vector3 velocity;
     bool isGrounded;
+    float turnSmoothVelocity;
+    public float turnSmoothTime = 0.1f;
 
+    [Space(10)]
+    [Header("Controller and camera")]
+    public CharacterController controller;
+    public Transform cam;
+
+    [Space(10)]
+    [Header("ground checker for jumpping")]
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    float turnSmoothVelocity;
-    public float turnSmoothTime = 0.1f;
+    [Space(10)]
+    [Header("Camera for aimming in third person")]
+    public GameObject FollowCamera;
+    public GameObject AimCamera;
 
-    
+
     void Update()
     {
-        
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //movement and wlaking 
 
         if (isGrounded && velocity.y < 0)
         {
@@ -40,22 +59,57 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
-        
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
-        
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (direction.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if (Input.GetMouseButton(1)) // to walk without spinning while aiming
+            {
+                controller.Move(direction * speed * Time.deltaTime);
+            }
+            else //to spin towards where camera is pointing and walk without aiming
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            }
+
         }
+
+        if (Input.GetMouseButtonDown(1) && isGrounded) //to make the boi aim at where the camera is pointing and where he is pointing
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0f);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        }
+
+
+        if (Input.GetMouseButton(1) && isGrounded) //some code for the camera system for aiming and shit no?
+        {
+            if (!AimCamera.activeInHierarchy)
+            {
+                AimCamera.SetActive(true);
+                FollowCamera.SetActive(false);
+            }
+
+        }
+        else
+        {
+            AimCamera.SetActive(false);
+            FollowCamera.SetActive(true);
+        }
+    }
+        
+public bool IsItGrounded() //to send to other scripts that the boi is grounded
+    {
+        return isGrounded;
     }
 }

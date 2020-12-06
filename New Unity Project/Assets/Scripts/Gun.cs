@@ -16,8 +16,7 @@ public class Gun : MonoBehaviour
     public LayerMask IgnoreHuman;
     public float readyToShootTimer = 0f;
     public Recoil recoil;
-    public GameObject FollowCamera;
-    public GameObject AimCamera;
+
 
     void Update ()
     {
@@ -25,13 +24,6 @@ public class Gun : MonoBehaviour
         {
             readyToShootTimer = readyToShootTimer - Time.deltaTime;
         }
-        if (Input.GetMouseButton(1))
-        {
-            if (!AimCamera.activeInHierarchy)
-            {
-                AimCamera.SetActive(true);
-                FollowCamera.SetActive(false);
-            }
 
             if (IsItFullAuto)
             {
@@ -48,14 +40,8 @@ public class Gun : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            AimCamera.SetActive(false);
-            FollowCamera.SetActive(true);
-        }
-        
 
-    }
+        
 
     void Shoot()
     {
@@ -76,4 +62,9 @@ public class Gun : MonoBehaviour
         }
     }
 
-}
+    }
+
+
+
+
+
