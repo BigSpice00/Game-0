@@ -61,11 +61,6 @@ public class PlayerController : MonoBehaviour
         //Rotate();
         Move(inputDir, running);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Punch();
-        }
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
@@ -176,20 +171,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Punch()
-    {
-        if (controller.isGrounded)
-        {
-            animator.SetTrigger("punchTrigger");
-            punchSound.PlayDelayed(0.2f);
-        }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") || animator.GetCurrentAnimatorStateInfo(0).IsName("Blend Tree"))
-        {
-            //animator.SetBool("kickBool", true);
-            animator.CrossFade("Kick", 0.3f);
-            punchSound.PlayDelayed(0.3f);
-        }
-    }
+
 
     float GetModifiedSmoothTime(float smoothTime)
     {
