@@ -19,7 +19,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement Stats")]
+    
+    #region Singleton
+
+    public static PlayerController instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    #endregion
+    // ^ ^ i made a singleton to make it easier to reference this script from other scripts cuz this one is important ^ ^
+
+    [Header("Stats")]
+    public float MaxHealth = 100f;
+    public float Health;
+    public float HealthRegenSpeed = 3f;
+    public float TimeToHealthRegen = 3f;
+    public float TimeToRecoverRemaining = 0f;
     public float speed = 6;
     public float gravity = -9.81f;
     public float jumpHeight = 3;
@@ -44,6 +62,12 @@ public class PlayerController : MonoBehaviour
     public GameObject FollowCamera;
     public GameObject AimCamera;
 
+   
+
+    void Start()
+    {
+        Health = MaxHealth;
+    }
 
     void Update()
     {
@@ -106,10 +130,38 @@ public class PlayerController : MonoBehaviour
             AimCamera.SetActive(false);
             FollowCamera.SetActive(true);
         }
+
+        if (TimeToRecoverRemaining > 0)  //to recover health after taking damage
+        {
+            TimeToRecoverRemaining = TimeToRecoverRemaining - Time.deltaTime;
+        }
+        else
+        {
+            TimeToRecoverRemaining = 0;
+            if(Health < MaxHealth)
+            {
+                Health = Health + (Time.deltaTime * HealthRegenSpeed);
+            }
+            else
+            {
+                Health = MaxHealth;
+            }
+        }
+
+        if(Health <= 0)
+        {
+            // insert die code here pls
+        }
     }
         
-public bool IsItGrounded() //to send to other scripts that the boi is grounded
+    public bool IsItGrounded() //to send to other scripts that the boi is grounded
     {
         return isGrounded;
+    }
+
+    public void TakeDamage(float DamageTaken) //to be attacked by enemies
+    {
+        Health = Health - DamageTaken;
+        TimeToRecoverRemaining = TimeToHealthRegen;
     }
 }

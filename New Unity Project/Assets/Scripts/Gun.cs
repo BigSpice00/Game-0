@@ -4,33 +4,51 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    //The commented stuff needs working because idk how to reference stuff from another script properly 
+
+    #region Singleton
+
+    public static Gun instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    #endregion
+    // ^ ^ i made a singleton to make it easier to reference this script from other scripts cuz this one is important ^ ^
+
     [Header("Weapon Stats")]
     public float Damage = 10f;
     public float range = 100f;
-    public float RateOfFirePerSecond = 5;
+    public float RateOfFirePerSecond = 5f;
     public bool IsItFullAuto = true;
+    public float listeningDropOff = 2f;
+    public bool Silenced = false;
     [Space(10)]
     [Header("Other")]
     public Camera ShootingCamera;
     public LayerMask IgnoreHuman;
     public float readyToShootTimer = 0f;
     public Recoil recoil;
-    //bool isGrounded;
-    //public PlayerController playerControllerScript;
+    PlayerController playerControllerScript;
+    public bool Shooting = false;
 
 
 
 
+    void Start()
+    {
+        playerControllerScript = PlayerController.instance;
+    }
 
     void Update ()
     {
-        //isGrounded = playerControllerScript.IsItGrounded();
+        
         if (readyToShootTimer > 0)
         {
             readyToShootTimer = readyToShootTimer - Time.deltaTime;
         }
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && playerControllerScript.IsItGrounded())
         {
 
             if (IsItFullAuto)
@@ -38,6 +56,7 @@ public class Gun : MonoBehaviour
                 if (Input.GetButton("Fire1"))
                 {
                     Shoot();
+                   
                 }
             }
             else
@@ -47,6 +66,11 @@ public class Gun : MonoBehaviour
                     Shoot();
                 }
             }
+            Shooting = true;
+        }
+        else
+        {
+            Shooting = false;
         }
 
         }
@@ -70,6 +94,20 @@ public class Gun : MonoBehaviour
                 readyToShootTimer = 1 / RateOfFirePerSecond;
         }
         }
+        
+    }
+
+    public bool IsItNotSilenced () 
+    {
+        return !Silenced;
+    }
+    public bool IsItShooting()
+    {
+        return Shooting;
+    }
+    public float WhatsListeningRange()
+    {
+        return range/listeningDropOff;
     }
 
     }
