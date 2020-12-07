@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButton(1)) // to walk without spinning while aiming
             {
-                controller.Move(direction * speed * Time.deltaTime);
+                controller.Move(direction.normalized * speed * Time.deltaTime);
             }
             else //to spin towards where camera is pointing and walk without aiming
             {
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonDown(1) && isGrounded) //to make the boi aim at where the camera is pointing and where he is pointing
+        if (Input.GetMouseButtonDown(1) && isGrounded) //to make the boi aim at where the camera is pointing and not where he is pointing
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0f);

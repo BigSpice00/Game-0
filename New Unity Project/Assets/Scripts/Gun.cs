@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    
+    //The commented stuff needs working because idk how to reference stuff from another script properly 
     [Header("Weapon Stats")]
     public float Damage = 10f;
     public float range = 100f;
@@ -16,14 +16,22 @@ public class Gun : MonoBehaviour
     public LayerMask IgnoreHuman;
     public float readyToShootTimer = 0f;
     public Recoil recoil;
+    //bool isGrounded;
+    //public PlayerController playerControllerScript;
+
+
+
 
 
     void Update ()
     {
-        if(readyToShootTimer > 0)
+        //isGrounded = playerControllerScript.IsItGrounded();
+        if (readyToShootTimer > 0)
         {
             readyToShootTimer = readyToShootTimer - Time.deltaTime;
         }
+        if (Input.GetMouseButton(1))
+        {
 
             if (IsItFullAuto)
             {
@@ -39,6 +47,8 @@ public class Gun : MonoBehaviour
                     Shoot();
                 }
             }
+        }
+
         }
 
         
