@@ -4,8 +4,7 @@
 
 --= to Do =-- 
 
--Create animations and speeds for mr brute
--Add sprint and crouch
+-Add crouch
 
 */
 using System.Collections;
@@ -19,7 +18,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
+
     #region Singleton
 
     public static PlayerController instance;
@@ -39,6 +38,8 @@ public class PlayerController : MonoBehaviour
     public float TimeToHealthRegen = 3f;
     public float TimeToRecoverRemaining = 0f;
     public float speed = 6;
+    public float SprintSpeed = 12;
+    public float crouchSpeed = 4;
     public float gravity = -9.81f;
     public float jumpHeight = 3;
     Vector3 velocity;
@@ -61,28 +62,71 @@ public class PlayerController : MonoBehaviour
     [Header("Camera for aimming in third person")]
     public GameObject FollowCamera;
     public GameObject AimCamera;
+    public GameObject FreeLookObject;
 
-   
+    Animator animator;
+    float CurrentSpeed = 0f;
+    float walkingAcceleration = 1f;
+    float SprintAcceleration = 2f;
+    float walkingAccelerationTemp;
+    float speedTemp;
+    bool IsSprinting = false;
+
+
+
 
     void Start()
     {
+        walkingAccelerationTemp = walkingAcceleration;
+        speedTemp = speed;
         Health = MaxHealth;
+        animator = GetComponent<Animator>();
+        animator.SetBool("Crouching", false);
+        animator.SetBool("Aiming", false);
     }
 
     void Update()
     {
-
+        animator.SetFloat("Speed", CurrentSpeed); //set the animation speed
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //movement and wlaking 
+
+        if (Input.GetKey(KeyCode.LeftControl) && isGrounded) //crouching
+        {
+            speed = crouchSpeed;
+            walkingAcceleration = walkingAccelerationTemp;
+            IsSprinting = false;
+            animator.SetBool("Crouching", true);
+            FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 1.3f, FreeLookObject.transform.position.z); //to move the camera to the crouching animation
+        }
+        else
+        {
+            animator.SetBool("Crouching", false);
+            FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 2f, FreeLookObject.transform.position.z); ;
+        }
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = -0.5f;
+        }
+        if (isGrounded)
+        {
+            animator.SetBool("InAir", false);
+            if (Input.GetButton("Jump"))
+            {
+                animator.SetBool("Jumping", true);
+                velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+            }
+            else
+            {
+                animator.SetBool("Jumping", false);
+            }
+        }
+        else
+        {
+            animator.SetBool("InAir", true);
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-        }
+
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
@@ -92,12 +136,36 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
+            if(Input.GetKey(KeyCode.LeftControl) && isGrounded) // to move the camera up a bit while crouch moving
+            {
+                FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 1.62f, FreeLookObject.transform.position.z); 
+            }
+
             if (Input.GetMouseButton(1)) // to walk without spinning while aiming
             {
                 controller.Move(direction.normalized * speed * Time.deltaTime);
+                addSpeed(true, true, IsSprinting);
             }
             else //to spin towards where camera is pointing and walk without aiming
-            {
+            {            
+                if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
+                {
+                    speed = SprintSpeed;
+                    walkingAcceleration = SprintAcceleration;
+                    IsSprinting = true;
+                }
+                else if(!Input.GetKey(KeyCode.LeftControl))
+                {
+                    speed = speedTemp;
+                    walkingAcceleration = walkingAccelerationTemp;
+                    IsSprinting = false;
+                }
+
+                
+
+
+                addSpeed(true, false, IsSprinting);
+
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
@@ -107,6 +175,11 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        else
+        {
+            addSpeed(false, false, false);
+        }
+
 
         if (Input.GetMouseButtonDown(1) && isGrounded) //to make the boi aim at where the camera is pointing and not where he is pointing
         {
@@ -118,6 +191,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButton(1) && isGrounded) //some code for the camera system for aiming and shit no?
         {
+            animator.SetBool("Aiming", true);
             if (!AimCamera.activeInHierarchy)
             {
                 AimCamera.SetActive(true);
@@ -129,6 +203,7 @@ public class PlayerController : MonoBehaviour
         {
             AimCamera.SetActive(false);
             FollowCamera.SetActive(true);
+            animator.SetBool("Aiming", false);
         }
 
         if (TimeToRecoverRemaining > 0)  //to recover health after taking damage
@@ -152,6 +227,8 @@ public class PlayerController : MonoBehaviour
         {
             // insert die code here pls
         }
+
+
     }
         
     public bool IsItGrounded() //to send to other scripts that the boi is grounded
@@ -163,5 +240,29 @@ public class PlayerController : MonoBehaviour
     {
         Health = Health - DamageTaken;
         TimeToRecoverRemaining = TimeToHealthRegen;
+    }
+    
+    public void addSpeed(bool isGoing, bool IsAiming, bool isSprinting) // a code that sets the animation for speed (ik way more complecated that it should be)
+    {
+        if (isGoing && !IsAiming && isSprinting && CurrentSpeed <= 1f)
+        {
+            CurrentSpeed = CurrentSpeed + (Time.deltaTime * walkingAcceleration);
+        }
+        else if (isGoing && !isSprinting && CurrentSpeed <= 0.5f)
+        {
+            CurrentSpeed = CurrentSpeed + (Time.deltaTime * walkingAcceleration);
+        }
+        else if (isGoing && !isSprinting && CurrentSpeed > 0.5f)
+        {
+            CurrentSpeed = CurrentSpeed - (Time.deltaTime * walkingAcceleration);
+        }
+        else if (!isGoing && CurrentSpeed > 0f)
+        {
+            CurrentSpeed = CurrentSpeed - (Time.deltaTime * walkingAcceleration);
+        }
+        else if (!isGoing && CurrentSpeed < 0f)
+        {
+            CurrentSpeed = 0f;
+        }
     }
 }

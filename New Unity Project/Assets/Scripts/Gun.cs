@@ -53,7 +53,7 @@ public class Gun : MonoBehaviour
 
             if (IsItFullAuto)
             {
-                if (Input.GetButton("Fire1"))
+                if (Input.GetMouseButton(0))
                 {
                     Shoot();
                    
@@ -61,7 +61,7 @@ public class Gun : MonoBehaviour
             }
             else
             {
-                if (Input.GetButtonDown("Fire1"))
+                if (Input.GetMouseButtonDown(0))
                 {
                     Shoot();
                 }
