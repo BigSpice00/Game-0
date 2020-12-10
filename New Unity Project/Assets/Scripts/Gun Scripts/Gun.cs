@@ -35,9 +35,8 @@ public class Gun : MonoBehaviour
 
 
 
-
     void Start()
-    {
+    { 
         playerControllerScript = PlayerController.instance;
     }
 
