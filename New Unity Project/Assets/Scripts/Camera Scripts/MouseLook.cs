@@ -35,6 +35,7 @@ public class MouseLook : MonoBehaviour
             transform.localRotation = Quaternion.Euler(yRotation, 0f, 0f);
             playerCam.Rotate(Vector3.left * mouseY);
         }
+        
 
     }
 }

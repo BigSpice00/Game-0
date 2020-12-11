@@ -13,7 +13,7 @@ public class MoveToNextArea : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(MoveCube.transform.position, transform.position);
-        if (distance > 0.4f && !oppisiteLeg.GetComponent<MoveToNextArea>().ismoving())
+        if (distance > 0.5f && !oppisiteLeg.GetComponent<MoveToNextArea>().ismoving())
         {
             transform.position = Vector3.Lerp(transform.position, MoveCube.transform.position + new Vector3(0f, -0.2f, 0f), Time.deltaTime * LegMoveSpeed);
             OrginalPosition = transform.position;

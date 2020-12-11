@@ -4,7 +4,7 @@
 
 --= to Do =-- 
 
-
+- insert die code here pls
 
 */
 using System.Collections;
@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
     float walkingAccelerationTemp;
     float speedTemp;
     bool IsSprinting = false;
+    bool TURN;
 
 
 
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetBool("Crouching", false);
         animator.SetBool("Aiming", false);
+        TURN = false;
     }
 
     void Update()
@@ -96,12 +98,13 @@ public class PlayerController : MonoBehaviour
             walkingAcceleration = walkingAccelerationTemp;
             IsSprinting = false;
             animator.SetBool("Crouching", true);
-            FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 1.3f, FreeLookObject.transform.position.z); //to move the camera to the crouching animation
+            FreeLookObject.transform.localPosition = new Vector3(FreeLookObject.transform.localPosition.x, 1.3f, FreeLookObject.transform.localPosition.z);//to move the camera to the crouching animation
         }
         else
         {
             animator.SetBool("Crouching", false);
-            FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 2f, FreeLookObject.transform.position.z); ;
+            FreeLookObject.transform.localPosition = new Vector3(FreeLookObject.transform.localPosition.x, 2f, FreeLookObject.transform.localPosition.z);
+
         }
 
         if (isGrounded && velocity.y < 0)
@@ -136,9 +139,9 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
-            if(Input.GetKey(KeyCode.LeftControl) && isGrounded) // to move the camera up a bit while crouch moving
+            if(Input.GetKey(KeyCode.LeftControl) && isGrounded ) // to move the camera up a bit while crouch moving
             {
-                FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 1.62f, FreeLookObject.transform.position.z); 
+                FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 1.62f, FreeLookObject.transform.position.z);
             }
 
             if (Input.GetMouseButton(1)) // to walk without spinning while aiming
@@ -194,6 +197,12 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Aiming", true);
             if (!AimCamera.activeInHierarchy)
             {
+                if (!TURN)
+                {
+                    FreeLookObject.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    TURN = true;
+                }
+
                 AimCamera.SetActive(true);
                 FollowCamera.SetActive(false);
             }
@@ -204,6 +213,7 @@ public class PlayerController : MonoBehaviour
             AimCamera.SetActive(false);
             FollowCamera.SetActive(true);
             animator.SetBool("Aiming", false);
+            TURN = false;
         }
 
         if (TimeToRecoverRemaining > 0)  //to recover health after taking damage
