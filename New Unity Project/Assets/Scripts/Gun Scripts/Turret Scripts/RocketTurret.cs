@@ -16,6 +16,7 @@ public class RocketTurret : MonoBehaviour
     public GameObject Barrel;
     public GameObject rayCastOrigin;
     public GameObject Rocket;
+   // public ParticleSystem muzzleFlash;
     GameObject target;
     public GameObject aimTarget;
     GameObject CurrentTarget;
@@ -68,6 +69,7 @@ public class RocketTurret : MonoBehaviour
                 {
                     if(timeToImpact > 0 && readyToShootTimer <= 0)
                     {
+                       // muzzleFlash.Play();
                         currentTime = currentTime + Time.deltaTime;
                         float lerp = currentTime / finalTime;
                         timeToImpact = timeToImpact - Time.deltaTime;

@@ -13,6 +13,8 @@ public class MachineGunTurret : MonoBehaviour
     public GameObject rayCastOrigin;
     GameObject target;
     public GameObject aimTarget;
+   // public GameObject impact;
+   // public ParticleSystem muzzleFlash;
     GameObject CurrentTarget;
     public float distance;
     RaycastHit hit;
@@ -66,17 +68,18 @@ public class MachineGunTurret : MonoBehaviour
     {
         if (readyToShootTimer <= 0)
         {
+          //  muzzleFlash.Play();
+            //GameObject impactBoi = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+            //Destroy(impactBoi, 2f);
             Debug.DrawLine(rayCastOrigin.transform.position, hit.point, Color.red, 1f);
             EnemyController Enemy = hit.transform.GetComponent<EnemyController>();
-                
+
             if (target != null)
             {
                 Enemy.TakeDamage(damage);
             }
             readyToShootTimer = 1 / RateOfFirePerSecond;
-            }
         }
-
     }
 
-
+}
