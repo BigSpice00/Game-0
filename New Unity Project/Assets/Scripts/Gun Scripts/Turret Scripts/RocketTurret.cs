@@ -74,25 +74,22 @@ public class RocketTurret : MonoBehaviour
                         float lerp = currentTime / finalTime;
                         timeToImpact = timeToImpact - Time.deltaTime;
                         Rocket.SetActive(true);
-                        if(lerp < 0.25f)
+                        if(lerp < 0.15f)
                         {
-                            Rocket.transform.position = Vector3.Lerp(Rocket.transform.position, hit.point, lerp);
+                            Rocket.transform.position = Vector3.Slerp(Rocket.transform.position, hit.point, lerp);
                         }
                         else
                         {
                             timeToImpact = 0f;
-                            Debug.Log("lol");
                         }
                     }
                     else
                     {
-                        Debug.Log("pp");
                         Shoot();
                         isShooting = false;
                         Rocket.SetActive(false);
                         Rocket.transform.localPosition = new Vector3(0f, 0f, 0f);
                         currentTime = 0;
-                        //distance = Vector3.Distance(rayCastOrigin.transform.position, hit.point);
                     }
                 }
                 
