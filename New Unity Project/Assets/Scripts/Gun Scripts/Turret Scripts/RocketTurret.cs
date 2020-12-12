@@ -87,6 +87,7 @@ public class RocketTurret : MonoBehaviour
                     {
                         Shoot();
                         isShooting = false;
+                        //Rocket.transform.GetChild()
                         Rocket.SetActive(false);
                         Rocket.transform.localPosition = new Vector3(0f, 0f, 0f);
                         currentTime = 0;
