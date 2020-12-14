@@ -29,7 +29,6 @@ public class Gun : MonoBehaviour
     public Camera ShootingCamera;
     public LayerMask IgnoreHuman;
     public float readyToShootTimer = 0f;
-    public Recoil recoil;
     PlayerController playerControllerScript;
     public bool Shooting = false;
 
@@ -79,7 +78,6 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         if(readyToShootTimer <= 0) {
-            recoil.Fire();
         RaycastHit hit;
         if(Physics.Raycast(ShootingCamera.transform.position, ShootingCamera.transform.forward, out hit, range, ~IgnoreHuman))
         {

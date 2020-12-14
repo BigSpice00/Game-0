@@ -111,7 +111,8 @@ public class RocketTurret : MonoBehaviour
         if (readyToShootTimer <= 0)
         {
             Debug.DrawLine(rayCastOrigin.transform.position, hit.point, Color.red, 1f);
-            Instantiate(explosionEffect, hit.point, Quaternion.Euler(transform.up)); 
+            GameObject explosion = Instantiate(explosionEffect, hit.point, Quaternion.Euler(transform.up));
+            Destroy(explosion, 2f);
             Collider[] colliders = Physics.OverlapSphere(hit.point, blastRadius);
 
             foreach(Collider hitObject in colliders)

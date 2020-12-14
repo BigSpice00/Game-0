@@ -1,6 +1,6 @@
 ﻿/*--Bugs--*
  
-- There is a bug with movement while aiming down sight making movement inverted 
+no bugs currently
 
 --= to Do =-- 
 
@@ -15,6 +15,7 @@ using System.Collections.Specialized;
 using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,6 +65,12 @@ public class PlayerController : MonoBehaviour
     public GameObject AimCamera;
     public GameObject FreeLookObject;
 
+    [Space(10)]
+    [Header("Animation Rigging")]
+    public Rig aimLayer;
+    public Rig bodyLayer;
+    public float toAimDuration = 0.3f;
+
     Animator animator;
     float CurrentSpeed = 0f;
     float walkingAcceleration = 1f;
@@ -72,6 +79,7 @@ public class PlayerController : MonoBehaviour
     float speedTemp;
     bool IsSprinting = false;
     bool TURN;
+    Vector2 input;
 
 
 
@@ -98,12 +106,12 @@ public class PlayerController : MonoBehaviour
             walkingAcceleration = walkingAccelerationTemp;
             IsSprinting = false;
             animator.SetBool("Crouching", true);
-            FreeLookObject.transform.localPosition = new Vector3(FreeLookObject.transform.localPosition.x, 1.3f, FreeLookObject.transform.localPosition.z);//to move the camera to the crouching animation
+            FreeLookObject.transform.localPosition = new Vector3(FreeLookObject.transform.localPosition.x, 0.9f, FreeLookObject.transform.localPosition.z);//to move the camera to the crouching animation
         }
         else
         {
             animator.SetBool("Crouching", false);
-            FreeLookObject.transform.localPosition = new Vector3(FreeLookObject.transform.localPosition.x, 2f, FreeLookObject.transform.localPosition.z);
+            FreeLookObject.transform.localPosition = new Vector3(FreeLookObject.transform.localPosition.x, 1.6f, FreeLookObject.transform.localPosition.z);
 
         }
 
@@ -139,18 +147,12 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
-            if(Input.GetKey(KeyCode.LeftControl) && isGrounded ) // to move the camera up a bit while crouch moving
+            animator.applyRootMotion = false;
+            if (Input.GetKey(KeyCode.LeftControl) && isGrounded ) // to move the camera up a bit while crouch moving
             {
-                FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 1.62f, FreeLookObject.transform.position.z);
+                FreeLookObject.transform.position = new Vector3(FreeLookObject.transform.position.x, 1.2f, FreeLookObject.transform.position.z);
             }
-
-            if (Input.GetMouseButton(1)) // to walk without spinning while aiming
-            {
-                controller.Move(direction.normalized * speed * Time.deltaTime);
-                addSpeed(true, true, IsSprinting);
-            }
-            else //to spin towards where camera is pointing and walk without aiming
-            {            
+            if (!Input.GetMouseButton(1)) { 
                 if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl))
                 {
                     speed = SprintSpeed;
@@ -194,7 +196,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButton(1) && isGrounded) //some code for the camera system for aiming and shit no?
         {
+            animator.applyRootMotion = true;
             animator.SetBool("Aiming", true);
+            aimLayer.weight += Time.deltaTime / toAimDuration;
+            bodyLayer.weight = 1f;
+            input.x = Input.GetAxis("Horizontal");
+            input.y = Input.GetAxis("Vertical");
+            animator.SetFloat("MovementX", input.x);
+            animator.SetFloat("MovementY", input.y);
             if (!AimCamera.activeInHierarchy)
             {
                 if (!TURN)
@@ -210,6 +219,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            aimLayer.weight -= Time.deltaTime / toAimDuration;
+            bodyLayer.weight = 0f;
+            animator.applyRootMotion = false;
             AimCamera.SetActive(false);
             FollowCamera.SetActive(true);
             animator.SetBool("Aiming", false);
@@ -268,10 +280,12 @@ public class PlayerController : MonoBehaviour
         }
         else if (!isGoing && CurrentSpeed > 0f)
         {
-            CurrentSpeed = CurrentSpeed - (Time.deltaTime * walkingAcceleration);
+            animator.applyRootMotion = true;
+            CurrentSpeed = CurrentSpeed - (Time.deltaTime * walkingAcceleration)*2;
         }
         else if (!isGoing && CurrentSpeed < 0f)
         {
+            animator.applyRootMotion = false;
             CurrentSpeed = 0f;
         }
     }

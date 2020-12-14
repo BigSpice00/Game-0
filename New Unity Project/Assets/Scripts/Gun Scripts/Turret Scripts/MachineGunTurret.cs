@@ -74,7 +74,7 @@ public class MachineGunTurret : MonoBehaviour
             Debug.DrawLine(rayCastOrigin.transform.position, hit.point, Color.red, 1f);
             EnemyController Enemy = hit.transform.GetComponent<EnemyController>();
 
-            if (target != null)
+            if (Enemy != null)
             {
                 Enemy.TakeDamage(damage);
             }
