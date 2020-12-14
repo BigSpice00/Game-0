@@ -24,6 +24,19 @@ public class Gun : MonoBehaviour
     public bool IsItFullAuto = true;
     public float listeningDropOff = 2f;
     public bool Silenced = false;
+
+    [Space(10)]
+    [Header("GFX")]
+    public ParticleSystem[] muzzleFlash;
+    public GameObject concreteBulletHole;
+    public GameObject woodBulletHole;
+    public GameObject sandBulletHole;
+    public GameObject metalBulletHole;
+    public GameObject softBulletHole;
+    public GameObject dirtBulletHole;
+    public GameObject currentBulletHole;
+    public float timeTillDeath = 2f;
+
     [Space(10)]
     [Header("Other")]
     public Camera ShootingCamera;
@@ -46,7 +59,7 @@ public class Gun : MonoBehaviour
         {
             readyToShootTimer = readyToShootTimer - Time.deltaTime;
         }
-        if (Input.GetMouseButton(1) && playerControllerScript.IsItGrounded())
+        if (Input.GetMouseButton(1) && playerControllerScript.IsItGrounded() && playerControllerScript.IsReadyToShoot())
         {
 
             if (IsItFullAuto)
@@ -78,7 +91,13 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         if(readyToShootTimer <= 0) {
-        RaycastHit hit;
+
+            foreach(ParticleSystem Muzzle in muzzleFlash)
+            {
+                Muzzle.Emit(1);
+            }
+
+            RaycastHit hit;
         if(Physics.Raycast(ShootingCamera.transform.position, ShootingCamera.transform.forward, out hit, range, ~IgnoreHuman))
         {
             Debug.Log(hit.transform.name);
@@ -89,7 +108,35 @@ public class Gun : MonoBehaviour
                 target.TakeDamage(Damage);
             }
                 readyToShootTimer = 1 / RateOfFirePerSecond;
-        }
+
+                if (hit.collider.gameObject.tag == "Dirt")
+                {
+                    currentBulletHole = dirtBulletHole;
+                }
+                else if (hit.collider.gameObject.tag == "Sand")
+                {
+                    currentBulletHole = sandBulletHole;
+                }
+                else if (hit.collider.gameObject.tag == "Wood")
+                {
+                    currentBulletHole = woodBulletHole;
+                }
+                else if (hit.collider.gameObject.tag == "Metal")
+                {
+                    currentBulletHole = metalBulletHole;
+                }
+                else if (hit.collider.gameObject.tag == "Concrete")
+                {
+                    currentBulletHole = concreteBulletHole;
+                }
+                else
+                {
+                    currentBulletHole = softBulletHole;
+                }                    
+                GameObject impactEffect = Instantiate(currentBulletHole, hit.point, Quaternion.Euler(0f, 0f, 0f));
+                currentBulletHole.transform.GetChild(0).forward = hit.normal;
+                Destroy(impactEffect, timeTillDeath);
+            }
         }
         
     }

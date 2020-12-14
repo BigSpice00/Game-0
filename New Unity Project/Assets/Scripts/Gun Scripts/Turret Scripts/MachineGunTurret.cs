@@ -13,8 +13,18 @@ public class MachineGunTurret : MonoBehaviour
     public GameObject rayCastOrigin;
     GameObject target;
     public GameObject aimTarget;
-   // public GameObject impact;
-   // public ParticleSystem muzzleFlash;
+
+    [Header("GFX")]
+    public ParticleSystem[] muzzleFlash;
+    public GameObject concreteBulletHole;
+    public GameObject woodBulletHole;
+    public GameObject sandBulletHole;
+    public GameObject metalBulletHole;
+    public GameObject softBulletHole;
+    public GameObject dirtBulletHole;
+    public GameObject currentBulletHole;
+    public float timeTillDeath = 2f;
+
     GameObject CurrentTarget;
     public float distance;
     RaycastHit hit;
@@ -68,9 +78,11 @@ public class MachineGunTurret : MonoBehaviour
     {
         if (readyToShootTimer <= 0)
         {
-          //  muzzleFlash.Play();
-            //GameObject impactBoi = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-            //Destroy(impactBoi, 2f);
+            foreach (ParticleSystem Muzzle in muzzleFlash)
+            {
+                Muzzle.Emit(1);
+            }
+
             Debug.DrawLine(rayCastOrigin.transform.position, hit.point, Color.red, 1f);
             EnemyController Enemy = hit.transform.GetComponent<EnemyController>();
 
@@ -79,6 +91,34 @@ public class MachineGunTurret : MonoBehaviour
                 Enemy.TakeDamage(damage);
             }
             readyToShootTimer = 1 / RateOfFirePerSecond;
+
+            if (hit.collider.gameObject.tag == "Dirt")
+            {
+                currentBulletHole = dirtBulletHole;
+            }
+            else if (hit.collider.gameObject.tag == "Sand")
+            {
+                currentBulletHole = sandBulletHole;
+            }
+            else if (hit.collider.gameObject.tag == "Wood")
+            {
+                currentBulletHole = woodBulletHole;
+            }
+            else if (hit.collider.gameObject.tag == "Metal")
+            {
+                currentBulletHole = metalBulletHole;
+            }
+            else if (hit.collider.gameObject.tag == "Concrete")
+            {
+                currentBulletHole = concreteBulletHole;
+            }
+            else
+            {
+                currentBulletHole = softBulletHole;
+            }
+            GameObject impactEffect = Instantiate(currentBulletHole, hit.point, Quaternion.Euler(0f, 0f, 0f));
+            currentBulletHole.transform.GetChild(0).forward = hit.normal;
+            Destroy(impactEffect, timeTillDeath);
         }
     }
 

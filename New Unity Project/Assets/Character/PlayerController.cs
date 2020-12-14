@@ -256,6 +256,18 @@ public class PlayerController : MonoBehaviour
     public bool IsItGrounded() //to send to other scripts that the boi is grounded
     {
         return isGrounded;
+    } 
+    
+    public bool IsReadyToShoot() //to send to other scripts that the boi is grounded
+    {
+        if (aimLayer.weight >= 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void TakeDamage(float DamageTaken) //to be attacked by enemies

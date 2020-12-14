@@ -16,7 +16,7 @@ public class RocketTurret : MonoBehaviour
     public GameObject Barrel;
     public GameObject rayCastOrigin;
     public GameObject Rocket;
-   // public ParticleSystem muzzleFlash;
+    public ParticleSystem[] muzzleFlash;
     GameObject target;
     public GameObject aimTarget;
     GameObject CurrentTarget;
@@ -74,7 +74,11 @@ public class RocketTurret : MonoBehaviour
                         float lerp = currentTime / finalTime;
                         timeToImpact = timeToImpact - Time.deltaTime;
                         Rocket.SetActive(true);
-                        if(lerp < 0.15f)
+                        foreach (ParticleSystem Muzzle in muzzleFlash)
+                        {
+                            Muzzle.Emit(1);
+                        }
+                        if (lerp < 0.15f)
                         {
                             Rocket.transform.position = Vector3.Slerp(Rocket.transform.position, hit.point, lerp);
                         }
@@ -111,7 +115,7 @@ public class RocketTurret : MonoBehaviour
         if (readyToShootTimer <= 0)
         {
             Debug.DrawLine(rayCastOrigin.transform.position, hit.point, Color.red, 1f);
-            GameObject explosion = Instantiate(explosionEffect, hit.point, Quaternion.Euler(transform.up));
+            GameObject explosion = Instantiate(explosionEffect, hit.point, Quaternion.Euler(transform.up)); 
             Destroy(explosion, 2f);
             Collider[] colliders = Physics.OverlapSphere(hit.point, blastRadius);
 
