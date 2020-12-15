@@ -1,0 +1,226 @@
+fileFormatVersion: 2
+guid: 4d510e9e0fbf27242bd79c42bfb6e8f6
+timeCreated: 1513884367
+licenseType: Store
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Bolt
+    100002: Bolt_end
+    100004: Bullet_in_magazine_01
+    100006: Bullet_in_magazine_01_end
+    100008: Bullet_in_magazine_02
+    100010: Bullet_in_magazine_02_end
+    100012: Bullet_in_magazine_03
+    100014: Bullet_in_magazine_03_end
+    100016: Bullet_in_magazine_04
+    100018: Bullet_in_magazine_04_end
+    100020: Bullet_in_magazine_05
+    100022: Bullet_in_magazine_05_end
+    100024: Bullet_in_magazine_06
+    100026: Bullet_in_magazine_06_end
+    100028: Bullets_to_insert
+    100030: Bullets_to_insert_end
+    100032: Colt_Python_rigged
+    100034: drum_Bullets
+    100036: Insert_bullet_holder
+    100038: Main
+    100040: //RootNode
+    100042: pyhton_mesh
+    100044: Reload_01
+    100046: reload_02
+    100048: Trigger
+    100050: Trigger_end
+    400000: Bolt
+    400002: Bolt_end
+    400004: Bullet_in_magazine_01
+    400006: Bullet_in_magazine_01_end
+    400008: Bullet_in_magazine_02
+    400010: Bullet_in_magazine_02_end
+    400012: Bullet_in_magazine_03
+    400014: Bullet_in_magazine_03_end
+    400016: Bullet_in_magazine_04
+    400018: Bullet_in_magazine_04_end
+    400020: Bullet_in_magazine_05
+    400022: Bullet_in_magazine_05_end
+    400024: Bullet_in_magazine_06
+    400026: Bullet_in_magazine_06_end
+    400028: Bullets_to_insert
+    400030: Bullets_to_insert_end
+    400032: Colt_Python_rigged
+    400034: drum_Bullets
+    400036: Insert_bullet_holder
+    400038: Main
+    400040: //RootNode
+    400042: pyhton_mesh
+    400044: Reload_01
+    400046: reload_02
+    400048: Trigger
+    400050: Trigger_end
+    4300000: pyhton_mesh
+    7400000: Colt_Python_rigged|Shoot_show_python
+    9500000: //RootNode
+    13700000: pyhton_mesh
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Aim_point
+    second: {fileID: 2100000, guid: 94268758b9ab8eb41a0ad3d788bb7102, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BulletHead_magazine_01
+    second: {fileID: 2100000, guid: 419dd78b0b2034e4e89907dc75da943b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BulletHead_magazine_02
+    second: {fileID: 2100000, guid: 896110ba2da298540b310d6b2fc2ecc2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BulletHead_magazine_03
+    second: {fileID: 2100000, guid: bed82ffe1b7d5264ba6d4635be8bfb6b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BulletHead_magazine_04
+    second: {fileID: 2100000, guid: 5f0b895b162108c4bbc4a0c6deffbccf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BulletHead_magazine_05
+    second: {fileID: 2100000, guid: c051c60bb5a3841418e51cde5802d15e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BulletHead_magazine_06
+    second: {fileID: 2100000, guid: 74824b6ab7602704aac0ee6c26e8c88a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullet_insert_holder
+    second: {fileID: 2100000, guid: 1fcb5cbebbacc6e49a1ed30c5ca29aa0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullet_magazine_01
+    second: {fileID: 2100000, guid: a2fe8b97e9ac9784cb1ade9f4c22d65a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullet_magazine_02
+    second: {fileID: 2100000, guid: 5b320a77b74ef4c4a9639026a83b0fe6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullet_magazine_03
+    second: {fileID: 2100000, guid: 7a765218210c2334585a2453f7c71078, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullet_magazine_04
+    second: {fileID: 2100000, guid: d5ec5e6dd910d4247bf0b9faa4d7376a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullet_magazine_05
+    second: {fileID: 2100000, guid: e0f3a12d401cc574ebb2b2d04cde20f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullet_magazine_06
+    second: {fileID: 2100000, guid: 7af84e8efe086924d85d6cff81eaea21, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullets_to_insert
+    second: {fileID: 2100000, guid: eb434e39b11732b419d68da165de111a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main_01
+    second: {fileID: 2100000, guid: 094b67e7a9cbfa547b20e0d7ec2dd128, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main_02
+    second: {fileID: 2100000, guid: 3e0c8e0c34ff4814f839ac0cabdb257d, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

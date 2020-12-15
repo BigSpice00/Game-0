@@ -36,6 +36,9 @@ public class Gun : MonoBehaviour
     public GameObject dirtBulletHole;
     public GameObject currentBulletHole;
     public float timeTillDeath = 2f;
+    public TrailRenderer TracerEffect;
+    public GameObject muzzleOrigin;
+    public string weaponAnimation;
 
     [Space(10)]
     [Header("Other")]
@@ -91,8 +94,9 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         if(readyToShootTimer <= 0) {
-
-            foreach(ParticleSystem Muzzle in muzzleFlash)
+            var tracer = Instantiate(TracerEffect, muzzleOrigin.transform.position, Quaternion.identity);
+            tracer.AddPosition(muzzleOrigin.transform.position);
+            foreach (ParticleSystem Muzzle in muzzleFlash)
             {
                 Muzzle.Emit(1);
             }
@@ -108,6 +112,7 @@ public class Gun : MonoBehaviour
                 target.TakeDamage(Damage);
             }
                 readyToShootTimer = 1 / RateOfFirePerSecond;
+                tracer.transform.position = hit.point;
 
                 if (hit.collider.gameObject.tag == "Dirt")
                 {

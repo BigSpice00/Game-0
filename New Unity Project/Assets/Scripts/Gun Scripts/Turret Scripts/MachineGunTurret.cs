@@ -24,6 +24,7 @@ public class MachineGunTurret : MonoBehaviour
     public GameObject dirtBulletHole;
     public GameObject currentBulletHole;
     public float timeTillDeath = 2f;
+    public TrailRenderer TracerEffect;
 
     GameObject CurrentTarget;
     public float distance;
@@ -83,6 +84,9 @@ public class MachineGunTurret : MonoBehaviour
                 Muzzle.Emit(1);
             }
 
+            var tracer = Instantiate(TracerEffect, rayCastOrigin.transform.position, Quaternion.identity);
+            tracer.AddPosition(rayCastOrigin.transform.position);
+
             Debug.DrawLine(rayCastOrigin.transform.position, hit.point, Color.red, 1f);
             EnemyController Enemy = hit.transform.GetComponent<EnemyController>();
 
@@ -91,6 +95,7 @@ public class MachineGunTurret : MonoBehaviour
                 Enemy.TakeDamage(damage);
             }
             readyToShootTimer = 1 / RateOfFirePerSecond;
+            tracer.transform.position = hit.point;
 
             if (hit.collider.gameObject.tag == "Dirt")
             {

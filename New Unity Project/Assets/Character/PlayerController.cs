@@ -1,7 +1,7 @@
 ﻿/*--Bugs--*
  
-no bugs currently
-
+when aiming down the game remembers the last rotation of the camera and applies it when aiming again (aim down sight look all the way up and then 
+let go of the aim then try to aim again but looking all the way down u will know)
 --= to Do =-- 
 
 - insert die code here pls
