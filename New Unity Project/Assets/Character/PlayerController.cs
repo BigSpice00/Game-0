@@ -68,8 +68,8 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
     [Header("Animation Rigging")]
     public Rig aimLayer;
-    public Rig bodyLayer;
     public float toAimDuration = 0.3f;
+    public Animator rigController;
 
     Animator animator;
     float CurrentSpeed = 0f;
@@ -198,8 +198,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.applyRootMotion = true;
             animator.SetBool("Aiming", true);
-            aimLayer.weight += Time.deltaTime / toAimDuration;
-            bodyLayer.weight = 1f;
+            rigController.SetBool("Aiming", true);
             input.x = Input.GetAxis("Horizontal");
             input.y = Input.GetAxis("Vertical");
             animator.SetFloat("MovementX", input.x);
@@ -219,12 +218,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            aimLayer.weight -= Time.deltaTime / toAimDuration;
-            bodyLayer.weight = 0f;
             animator.applyRootMotion = false;
             AimCamera.SetActive(false);
             FollowCamera.SetActive(true);
             animator.SetBool("Aiming", false);
+            rigController.SetBool("Aiming", false);
             TURN = false;
         }
 
