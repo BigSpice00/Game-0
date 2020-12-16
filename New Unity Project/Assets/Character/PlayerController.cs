@@ -204,6 +204,7 @@ public class PlayerController : MonoBehaviour
             input.y = Input.GetAxis("Vertical");
             animator.SetFloat("MovementX", input.x);
             animator.SetFloat("MovementY", input.y);
+            rigController.SetBool("holstering", false);
             if (!AimCamera.activeInHierarchy)
             {
                 if (!TURN)

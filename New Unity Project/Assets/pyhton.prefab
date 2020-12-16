@@ -754,6 +754,7 @@ MonoBehaviour:
   IsItFullAuto: 1
   listeningDropOff: 2
   Silenced: 0
+  bulletForceOnImpact: 300
   muzzleFlash:
   - {fileID: 1717669084847631507}
   - {fileID: 1717669086146343665}

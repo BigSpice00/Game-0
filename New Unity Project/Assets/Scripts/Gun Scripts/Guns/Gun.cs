@@ -24,6 +24,7 @@ public class Gun : MonoBehaviour
     public bool IsItFullAuto = true;
     public float listeningDropOff = 2f;
     public bool Silenced = false;
+    public float bulletForceOnImpact = 30f;
 
     [Space(10)]
     [Header("GFX")]
@@ -111,6 +112,10 @@ public class Gun : MonoBehaviour
             {
                 target.TakeDamage(Damage);
             }
+            if(hit.rigidbody != null)
+                {
+                    hit.rigidbody.AddForce(-hit.normal * bulletForceOnImpact);
+                }
                 readyToShootTimer = 1 / RateOfFirePerSecond;
                 tracer.transform.position = hit.point;
 
