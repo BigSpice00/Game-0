@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 1
   m_Data:
-    m_ConstrainedObject: {fileID: 815232158}
+    m_ConstrainedObject: {fileID: 2089068739}
     m_SourceObjects:
       m_Length: 1
       m_Item0:
@@ -5336,7 +5336,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794705802}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.0000000074505797, y: 0.000000029802319, z: 0.000000014901159, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5429,7 +5429,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815232157}
   m_LocalRotation: {x: 0.40323684, y: 0.49828362, z: -0.7082439, w: 0.29581097}
-  m_LocalPosition: {x: 0.14600372, y: 2.722, z: 0.07900047}
+  m_LocalPosition: {x: 0.03500372, y: 0, z: 0.07900047}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1607843562}
@@ -6254,7 +6254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.616441, z: -3.653051}
+  m_FollowOffset: {x: 0, y: -1.658616, z: -3.625417}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -24492,7 +24492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.616441, z: -3.653051}
+  m_FollowOffset: {x: 0, y: -1.658616, z: -3.625417}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1.7
@@ -30341,7 +30341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.616441, z: -3.653051}
+  m_FollowOffset: {x: 0, y: -1.658616, z: -3.625417}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -31944,7 +31944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089068738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.111, y: 1.422, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 815232158}
@@ -115468,6 +115468,7 @@ MonoBehaviour:
   aimLayer: {fileID: 942442430}
   toAimDuration: 0.3
   rigController: {fileID: 729409813}
+  weaponAimToCenter: {fileID: 2089068738}
 --- !u!114 &8296172668072534874
 MonoBehaviour:
   m_ObjectHideFlags: 0

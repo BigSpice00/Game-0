@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
     public Rig aimLayer;
     public float toAimDuration = 0.3f;
     public Animator rigController;
+    public GameObject weaponAimToCenter;
 
     Animator animator;
     float CurrentSpeed = 0f;
@@ -218,6 +219,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            weaponAimToCenter.transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
             animator.applyRootMotion = false;
             AimCamera.SetActive(false);
             FollowCamera.SetActive(true);
