@@ -43,6 +43,7 @@ public class Gun : MonoBehaviour
 
     [Space(10)]
     [Header("Other")]
+    public ActiveWeapon.WeaponSlots weaponSlots;
     public Camera ShootingCamera;
     public LayerMask IgnoreHuman;
     public float readyToShootTimer = 0f;

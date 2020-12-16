@@ -6,8 +6,14 @@ using UnityEditor.Animations;
 
 public class ActiveWeapon : MonoBehaviour
 {
-    Gun weapon;
-    public Transform weaponParent;
+    public enum WeaponSlots
+    {
+        Primary = 0,
+        Secondary = 1
+    }
+    Gun[] equipedWeapon = new Gun[2];
+    int activeWeaponIndex;
+    public Transform[] weaponSlots;
     public Transform LeftGrip;
     public Transform RightGrip;
     public GameObject concreteBulletHole;
@@ -19,7 +25,15 @@ public class ActiveWeapon : MonoBehaviour
     public Camera ShootingCamera;
     //public Rig handIK;
     public Animator rigController;
-    
+
+    Gun GetWeapon(int index)
+    {
+        if (index < 0 || index >= weaponSlots.Length)
+        {
+            return null;
+        }
+        return equipedWeapon[index];
+    }
     void Start()
     {
         Invoke(nameof(Adjust), 0.01f);
@@ -48,13 +62,14 @@ public class ActiveWeapon : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            bool isHolstered = rigController.GetBool("holstering");
-            rigController.SetBool("holstering", !isHolstered);
+            toggleActiveWeapon();
         }
     }
 
     public void Equip (Gun newWeapon)
     {
+        int weaponSlotIndex = (int) newWeapon.weaponSlots;
+        var weapon = GetWeapon(weaponSlotIndex);
         if (weapon)
         {
             Destroy(weapon.gameObject);
@@ -67,17 +82,63 @@ public class ActiveWeapon : MonoBehaviour
         weapon.softBulletHole = softBulletHole;
         weapon.dirtBulletHole = dirtBulletHole;
         weapon.ShootingCamera = ShootingCamera;
-        weapon.transform.parent = weaponParent;
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.localRotation = Quaternion.identity;
+        weapon.transform.SetParent(weaponSlots[weaponSlotIndex], false);
         Adjust();
-        Invoke(nameof(PlayAnimation), 0.05f);
 
-        
+        equipedWeapon[weaponSlotIndex] = weapon;
+        SetActiveWeaponIndex(weaponSlotIndex);
     }
 
-    void PlayAnimation()
+    public void toggleActiveWeapon()
     {
-        rigController.Play("equip_" + weapon.weaponAnimation);
+        bool isHolstered = rigController.GetBool("holstering");
+        if (isHolstered)
+        {
+            StartCoroutine(ActivateWeapon(activeWeaponIndex));
+        }
+        else
+        {
+            StartCoroutine(HolsterWeapon(activeWeaponIndex));
+        }
     }
+
+    void SetActiveWeaponIndex(int CurrentWeaponIndex)
+    {
+        int holsterIndex = activeWeaponIndex;
+        int activeIndex = CurrentWeaponIndex;
+        StartCoroutine(SwitchWeapon(activeIndex, holsterIndex));
+    } 
+
+    IEnumerator SwitchWeapon (int activeIndex, int holsterIndex)
+    {
+        yield return StartCoroutine(HolsterWeapon(holsterIndex));
+        yield return StartCoroutine(ActivateWeapon(activeIndex));
+        activeWeaponIndex = activeIndex;
+    }
+    IEnumerator ActivateWeapon (int index)
+    {
+        var weapon = GetWeapon(index);
+        if (weapon)
+        {
+            rigController.SetBool("holstering", true);
+            do
+            {
+                yield return new WaitForEndOfFrame();
+            } while (rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
+        }
+    }
+    IEnumerator HolsterWeapon (int index)
+    {
+        var weapon = GetWeapon(index);
+        if (weapon)
+        {
+            rigController.SetBool("holstering", false);
+            rigController.Play("equip_" + weapon.weaponAnimation);
+            do
+            {
+                yield return new WaitForEndOfFrame();
+            } while (rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
+        }
+    }
+
 }

@@ -770,6 +770,7 @@ MonoBehaviour:
   TracerEffect: {fileID: 6901889369599237752, guid: afe5fa3ca0ffc2944b17a6422a0b55ef, type: 3}
   muzzleOrigin: {fileID: 1717669085266652543}
   weaponAnimation: Python
+  weaponSlots: 1
   ShootingCamera: {fileID: 0}
   IgnoreHuman:
     serializedVersion: 2
