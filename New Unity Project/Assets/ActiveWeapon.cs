@@ -25,13 +25,13 @@ public class ActiveWeapon : MonoBehaviour
     public Camera ShootingCamera;
     //public Rig handIK;
     public Animator rigController;
-
+    bool isHolstered = false;
     Gun GetWeapon(int index)
     {
-        if (index < 0 || index >= weaponSlots.Length)
+        if (index < 0 || index >= equipedWeapon.Length)
         {
-            return null;
             Debug.Log("Null weapon");
+            return null;
         }
         return equipedWeapon[index];
     }
@@ -61,6 +61,7 @@ public class ActiveWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        equipedWeapon[activeWeaponIndex].IsItHolstered(isHolstered);
         if (Input.GetKeyDown(KeyCode.X))
         {
             toggleActiveWeapon();
@@ -129,7 +130,7 @@ public class ActiveWeapon : MonoBehaviour
     public void toggleActiveWeapon()
     {
         bool isHolstered = rigController.GetBool("holstering");
-        if (!isHolstered)
+        if (isHolstered)
         {
             StartCoroutine(ActivateWeapon(activeWeaponIndex));
         }
@@ -146,7 +147,7 @@ public class ActiveWeapon : MonoBehaviour
         int activeIndex = (int)weaponSlot;
         if (holsterIndex == activeIndex)
         {
-            holsterIndex = -1;
+            return;
         }
         StartCoroutine(SwitchWeapon(activeIndex, holsterIndex));
     } 
@@ -158,27 +159,16 @@ public class ActiveWeapon : MonoBehaviour
         yield return StartCoroutine(ActivateWeapon(activeIndex));
         activeWeaponIndex = activeIndex;
     }
-    IEnumerator ActivateWeapon (int index)
-    {
-        var weapon = GetWeapon(index);
-        if (weapon)
-        {
-            rigController.SetBool("holstering", true);
-            Debug.Log("3");
-            do
-            {
-                yield return new WaitForEndOfFrame();
-            } while (rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
-        }
-    }
+
     IEnumerator HolsterWeapon (int index)
     {
+        isHolstered = true;
         var weapon = GetWeapon(index);
         if (weapon)
         {
             Debug.Log("4");
-            rigController.SetBool("holstering", false);
-            rigController.Play("equip_" + weapon.weaponAnimation);
+            rigController.SetBool("holstering", true);
+            
             do
             {
                 yield return new WaitForEndOfFrame();
@@ -186,4 +176,19 @@ public class ActiveWeapon : MonoBehaviour
         }
     }
 
+    IEnumerator ActivateWeapon (int index)
+    {
+        var weapon = GetWeapon(index);
+        if (weapon)
+        {
+            rigController.SetBool("holstering",false);
+            Debug.Log("3");
+            rigController.Play("equip_" + weapon.weaponAnimation);
+            do
+            {
+                yield return new WaitForEndOfFrame();
+            } while (rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
+            isHolstered = false;
+        }
+    }
 }

@@ -40,6 +40,7 @@ public class Gun : MonoBehaviour
     public TrailRenderer TracerEffect;
     public GameObject muzzleOrigin;
     public string weaponAnimation;
+   
 
     [Space(10)]
     [Header("Other")]
@@ -49,7 +50,7 @@ public class Gun : MonoBehaviour
     public float readyToShootTimer = 0f;
     PlayerController playerControllerScript;
     public bool Shooting = false;
-
+    public bool Holstered = true;
 
 
     void Start()
@@ -64,7 +65,7 @@ public class Gun : MonoBehaviour
         {
             readyToShootTimer = readyToShootTimer - Time.deltaTime;
         }
-        if (Input.GetMouseButton(1) && playerControllerScript.IsItGrounded() && playerControllerScript.IsReadyToShoot())
+        if (Input.GetMouseButton(1) && playerControllerScript.IsItGrounded() && playerControllerScript.IsReadyToShoot() && !Holstered)
         {
 
             if (IsItFullAuto)
@@ -163,6 +164,10 @@ public class Gun : MonoBehaviour
     public float WhatsListeningRange()
     {
         return range/listeningDropOff;
+    }    
+    public void IsItHolstered(bool holstered)
+    {
+        Holstered = holstered;
     }
 
     }
