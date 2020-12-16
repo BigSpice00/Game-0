@@ -6338,7 +6338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.83, z: -3.5}
+  m_FollowOffset: {x: 0, y: -1.775312, z: -3.543102}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -24694,7 +24694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.83, z: -3.5}
+  m_FollowOffset: {x: 0, y: -1.775312, z: -3.543102}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1.7
@@ -30543,7 +30543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.83, z: -3.5}
+  m_FollowOffset: {x: 0, y: -1.775312, z: -3.543102}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -32735,7 +32735,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 3.325e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
