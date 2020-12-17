@@ -50,11 +50,12 @@ public class Gun : MonoBehaviour
     public float readyToShootTimer = 0f;
     PlayerController playerControllerScript;
     public bool Shooting = false;
-    public bool Holstered = true;
+    public bool Holstered;
 
 
     void Start()
-    { 
+    {
+        Holstered = true;
         playerControllerScript = PlayerController.instance;
     }
 

@@ -6202,8 +6202,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903365219}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.00031533834, y: -0.000056326382, z: -0.00020378825, w: 1}
+  m_LocalPosition: {x: 0.025, y: -0.015, z: -0.391}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2110335412}
@@ -6368,7 +6368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.827935, z: -3.501704}
+  m_FollowOffset: {x: 0, y: 1.750353, z: -5.403459}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -24779,7 +24779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.827935, z: -3.501704}
+  m_FollowOffset: {x: 0, y: 1.750353, z: -5.403459}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1.7
@@ -30628,7 +30628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.827935, z: -3.501704}
+  m_FollowOffset: {x: 0, y: 1.750353, z: -5.403459}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -32905,7 +32905,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 3.325e-41, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 3.0324e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -115871,6 +115871,7 @@ MonoBehaviour:
   toAimDuration: 0.3
   rigController: {fileID: 729409813}
   weaponAimToCenter: {fileID: 2089068738}
+  activeBoi: {fileID: 0}
 --- !u!114 &8296172668072534874
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,6 +37,7 @@ public class ActiveWeapon : MonoBehaviour
     }
     void Start()
     {
+        activeWeaponIndex = -1;
         Invoke(nameof(Adjust), 0.01f);
         Gun existingWeapon = GetComponentInChildren<Gun>();
         if (existingWeapon)
@@ -61,7 +62,11 @@ public class ActiveWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        equipedWeapon[activeWeaponIndex].IsItHolstered(isHolstered);
+        if (GetWeapon(activeWeaponIndex))
+        {
+            equipedWeapon[activeWeaponIndex].IsItHolstered(isHolstered);
+        }
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             toggleActiveWeapon();
@@ -129,15 +134,21 @@ public class ActiveWeapon : MonoBehaviour
 
     public void toggleActiveWeapon()
     {
-        bool isHolstered = rigController.GetBool("holstering");
-        if (isHolstered)
-        {
-            StartCoroutine(ActivateWeapon(activeWeaponIndex));
+        bool aimedAndNotPulled = Input.GetMouseButton(1) && isHolstered;
+        if (!Input.GetMouseButton(1) || aimedAndNotPulled)
+        {        
+            Debug.Log("BOOM2");
+            bool isHolstered = rigController.GetBool("holstering");
+            if (isHolstered)
+            {
+                StartCoroutine(ActivateWeapon(activeWeaponIndex));
+            }
+            else
+            {
+                StartCoroutine(HolsterWeapon(activeWeaponIndex));
+            }   
         }
-        else
-        {
-            StartCoroutine(HolsterWeapon(activeWeaponIndex));
-        }
+
     }
 
     void SetActiveWeapon(WeaponSlots weaponSlot)

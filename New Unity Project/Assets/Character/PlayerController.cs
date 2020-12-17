@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
     public float toAimDuration = 0.3f;
     public Animator rigController;
     public GameObject weaponAimToCenter;
+    public ActiveWeapon activeBoi;
 
     Animator animator;
     float CurrentSpeed = 0f;
@@ -79,7 +80,6 @@ public class PlayerController : MonoBehaviour
     float walkingAccelerationTemp;
     float speedTemp;
     bool IsSprinting = false;
-    bool TURN;
     Vector2 input;
 
 
@@ -87,13 +87,13 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        activeBoi = GetComponent<ActiveWeapon>();
         walkingAccelerationTemp = walkingAcceleration;
         speedTemp = speed;
         Health = MaxHealth;
         animator = GetComponent<Animator>();
         animator.SetBool("Crouching", false);
         animator.SetBool("Aiming", false);
-        TURN = false;
     }
 
     void Update()
@@ -189,9 +189,15 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && isGrounded) //to make the boi aim at where the camera is pointing and not where he is pointing
         {
+            //if (!rigController.GetBool("holstering"))
+           //{
+               // Debug.Log("BOOM");
+                //activeBoi.toggleActiveWeapon();
+            //}
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0f);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            FreeLookObject.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
 
@@ -204,17 +210,10 @@ public class PlayerController : MonoBehaviour
             input.y = Input.GetAxis("Vertical");
             animator.SetFloat("MovementX", input.x);
             animator.SetFloat("MovementY", input.y);
-            rigController.SetBool("holstering", false);
             if (!AimCamera.activeInHierarchy)
             {
-                if (!TURN)
-                {
-                    FreeLookObject.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-                    TURN = true;
-                }
-
-                AimCamera.SetActive(true);
-                FollowCamera.SetActive(false);
+            AimCamera.SetActive(true);
+            FollowCamera.SetActive(false);
             }
 
         }
@@ -226,7 +225,6 @@ public class PlayerController : MonoBehaviour
             FollowCamera.SetActive(true);
             animator.SetBool("Aiming", false);
             rigController.SetBool("Aiming", false);
-            TURN = false;
         }
 
         if (TimeToRecoverRemaining > 0)  //to recover health after taking damage
