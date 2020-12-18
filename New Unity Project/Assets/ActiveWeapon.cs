@@ -30,7 +30,7 @@ public class ActiveWeapon : MonoBehaviour
     {
         if (index < 0 || index >= equipedWeapon.Length)
         {
-            Debug.Log("Null weapon");
+            //Debug.Log("Null weapon");
             return null;
         }
         return equipedWeapon[index];
@@ -137,7 +137,7 @@ public class ActiveWeapon : MonoBehaviour
         bool aimedAndNotPulled = Input.GetMouseButton(1) && isHolstered;
         if (!Input.GetMouseButton(1) || aimedAndNotPulled)
         {        
-            Debug.Log("BOOM2");
+            //Debug.Log("BOOM2");
             bool isHolstered = rigController.GetBool("holstering");
             if (isHolstered)
             {
@@ -153,7 +153,7 @@ public class ActiveWeapon : MonoBehaviour
 
     void SetActiveWeapon(WeaponSlots weaponSlot)
     {
-        Debug.Log("1");
+        //Debug.Log("1");
         int holsterIndex = activeWeaponIndex;
         int activeIndex = (int)weaponSlot;
         if (holsterIndex == activeIndex)
@@ -165,7 +165,7 @@ public class ActiveWeapon : MonoBehaviour
 
     IEnumerator SwitchWeapon (int activeIndex, int holsterIndex)
     {
-        Debug.Log("2");
+       // Debug.Log("2");
         yield return StartCoroutine(HolsterWeapon(holsterIndex));
         yield return StartCoroutine(ActivateWeapon(activeIndex));
         activeWeaponIndex = activeIndex;
@@ -177,7 +177,7 @@ public class ActiveWeapon : MonoBehaviour
         var weapon = GetWeapon(index);
         if (weapon)
         {
-            Debug.Log("4");
+           // Debug.Log("4");
             rigController.SetBool("holstering", true);
             
             do
@@ -193,7 +193,7 @@ public class ActiveWeapon : MonoBehaviour
         if (weapon)
         {
             rigController.SetBool("holstering",false);
-            Debug.Log("3");
+            //Debug.Log("3");
             rigController.Play("equip_" + weapon.weaponAnimation);
             do
             {

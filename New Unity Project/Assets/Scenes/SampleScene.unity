@@ -1729,7 +1729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &424198776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6570,7 +6570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.569528, z: -3.682844}
+  m_FollowOffset: {x: 0, y: -1.069716, z: -3.966091}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -7268,7 +7268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1066638483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24981,7 +24981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.569528, z: -3.682844}
+  m_FollowOffset: {x: 0, y: -1.069716, z: -3.966091}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1.7
@@ -30860,7 +30860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: -1.569528, z: -3.682844}
+  m_FollowOffset: {x: 0, y: -1.069716, z: -3.966091}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -33012,12 +33012,12 @@ GameObject:
   - component: {fileID: 2123856334}
   - component: {fileID: 2123856333}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: sin experement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2123856333
 MonoBehaviour:
   m_ObjectHideFlags: 0
