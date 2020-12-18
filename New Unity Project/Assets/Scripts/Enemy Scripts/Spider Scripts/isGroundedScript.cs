@@ -16,7 +16,7 @@ public class isGroundedScript : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(Object2.transform.position + new Vector3(0f, 1.5f, 0f), -transform.up, out hit, layerMask))
         {
-            transform.position = hit.point + new Vector3(0f, 0.18f, 0f);
+            transform.position = hit.point + new Vector3(0f, 0.5f, 0f);
         }
     }
 }
