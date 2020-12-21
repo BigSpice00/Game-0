@@ -23,7 +23,7 @@ public class EnemyController : MonoBehaviour
     Transform target;
     NavMeshAgent agent;
     PlayerController playerControllerScript;
-    Gun gun;
+    //Gun gun;
     public float lookRadiusTemp;
     //float timeAfterShot = 0;
 
@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
         target = PlayerManager.instance.Player.transform;
         agent = GetComponent<NavMeshAgent>();
         playerControllerScript = PlayerController.instance;
-        gun = Gun.instance;
+        //gun = Gun.instance;
     }
 
 

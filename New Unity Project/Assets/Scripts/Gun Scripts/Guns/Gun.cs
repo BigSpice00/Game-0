@@ -5,20 +5,6 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
 
-    #region Singleton
-
-    public static Gun instance;
-    public GameObject AimFollow;
-
-    void Awake()
-    {
-        instance = this;
-        //weaponRecoil.setAimFollow(AimFollow);
-    }
-
-    #endregion
-    // ^ ^ i made a singleton to make it easier to reference this script from other scripts cuz this one is important ^ ^
-
     [Header("Weapon Stats")]
     public float Damage = 10f;
     public float range = 100f;
@@ -46,8 +32,10 @@ public class Gun : MonoBehaviour
 
     [Space(10)]
     [Header("Recoil")]
-    public WeaponRecoil weaponRecoil;
-    public MouseLook CameraBoi;
+    public float verticalRecoilValue = 25f;
+    public float horozontalRecoilValue = 0.5f;
+    //public MouseLook CameraBoi;
+    public Cinemachine.CinemachineImpulseSource cameraShake;
 
 
     [Space(10)]
@@ -58,20 +46,24 @@ public class Gun : MonoBehaviour
     public float readyToShootTimer = 0f;
     PlayerController playerControllerScript;
     public bool Shooting = false;
-    public bool Holstered;
+    public bool Holstered = true;
 
 
+    void Awake()
+    {
+        //weaponRecoil.setAimFollow(AimFollow);
+        
+    }
+    
     void Start()
     {
-        Holstered = true;
+        cameraShake = GetComponent<Cinemachine.CinemachineImpulseSource>();
         playerControllerScript = PlayerController.instance;
-        weaponRecoil = GetComponent<WeaponRecoil>();
     }
-
+    
     void Update ()
     {
         //CameraBoi.shootingp(Shooting);
-        
         if (readyToShootTimer > 0)
         {
             readyToShootTimer = readyToShootTimer - Time.deltaTime;
@@ -111,12 +103,13 @@ public class Gun : MonoBehaviour
             readyToShootTimer = 1 / RateOfFirePerSecond;
             Shooting = true;
             var tracer = Instantiate(TracerEffect, muzzleOrigin.transform.position, Quaternion.identity);
+            cameraShake.GenerateImpulse(ShootingCamera.transform.forward);
             tracer.AddPosition(muzzleOrigin.transform.position);
             foreach (ParticleSystem Muzzle in muzzleFlash)
             {
                 Muzzle.Emit(1);
             }
-            AimFollow.transform.rotation = Quaternion.Euler(new Vector3(AimFollow.transform.rotation.x + 100f, AimFollow.transform.rotation.y, AimFollow.transform.rotation.z));
+            //AimFollow.transform.rotation = Quaternion.Euler(new Vector3(AimFollow.transform.rotation.x + 100f, AimFollow.transform.rotation.y, AimFollow.transform.rotation.z));
 
             RaycastHit hit;
         if(Physics.Raycast(ShootingCamera.transform.position, ShootingCamera.transform.forward, out hit, range, ~IgnoreHuman))

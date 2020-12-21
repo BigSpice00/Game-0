@@ -16667,7 +16667,7 @@ GameObject:
   - component: {fileID: 8296810600835211725}
   - component: {fileID: 8296810600835211724}
   - component: {fileID: 4181963738132451136}
-  - component: {fileID: -7107281487168462345}
+  - component: {fileID: -4734129335742570776}
   m_Layer: 8
   m_Name: M4A1
   m_TagString: Untagged
@@ -16715,6 +16715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b19e19935fb2274bb05f36830d1243e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AimFollow: {fileID: 0}
   Damage: 10
   range: 100
   RateOfFirePerSecond: 19
@@ -16737,6 +16738,7 @@ MonoBehaviour:
   TracerEffect: {fileID: 6901889369599237752, guid: afe5fa3ca0ffc2944b17a6422a0b55ef, type: 3}
   muzzleOrigin: {fileID: 8296810600096847137}
   weaponAnimation: M4A1
+  CameraBoi: {fileID: 0}
   weaponSlots: 0
   ShootingCamera: {fileID: 0}
   IgnoreHuman:
@@ -16745,7 +16747,7 @@ MonoBehaviour:
   readyToShootTimer: 0
   Shooting: 0
   Holstered: 0
---- !u!114 &-7107281487168462345
+--- !u!114 &-4734129335742570776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16754,6 +16756,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 8296810600835211726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ffcea81705f0a540ab9716e38c3a786, type: 3}
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_RawSignal: {fileID: 11400000, guid: acd5c7015ce0cc444b6a858301cce7dd, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 1000
+    m_PropagationSpeed: 343

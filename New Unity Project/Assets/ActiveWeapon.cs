@@ -24,7 +24,6 @@ public class ActiveWeapon : MonoBehaviour
     public GameObject softBulletHole;
     public GameObject dirtBulletHole;
     public Camera ShootingCamera;
-    public GameObject aimFollow;
     public bool isItShooting = false;
     //public Rig handIK;
     public Animator rigController;
@@ -70,19 +69,21 @@ public class ActiveWeapon : MonoBehaviour
         {
             if (equipedWeapon[activeWeaponIndex].IsItShooting())
             {
+                CameraBoi.verticalRecoil = equipedWeapon[activeWeaponIndex].verticalRecoilValue;
+                CameraBoi.horozontalRecoil = equipedWeapon[activeWeaponIndex].horozontalRecoilValue;
                 CameraBoi.shooting = true;
-                Debug.Log("pp");
             }
             else
             {
                 CameraBoi.shooting = false;
+            }        
+            if (equipedWeapon[activeWeaponIndex])
+            {
+                //equipedWeapon[activeWeaponIndex].IsItHolstered(isHolstered);
             }
         }
         
-        if (GetWeapon(activeWeaponIndex))
-        {
-            equipedWeapon[activeWeaponIndex].IsItHolstered(isHolstered);
-        }
+
 
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -112,11 +113,11 @@ public class ActiveWeapon : MonoBehaviour
 
     void ScrollToNextWeapon()
     {
-        if(activeWeaponIndex == 1)
+        if(activeWeaponIndex == 1 && equipedWeapon[0])
         {
             SetActiveWeapon(WeaponSlots.Primary);
         }
-        else if(activeWeaponIndex == 0)
+        else if(activeWeaponIndex == 0 && equipedWeapon[1])
         {
             SetActiveWeapon(WeaponSlots.Secondary);
         }
@@ -142,7 +143,6 @@ public class ActiveWeapon : MonoBehaviour
         weapon.softBulletHole = softBulletHole;
         weapon.dirtBulletHole = dirtBulletHole;
         weapon.ShootingCamera = ShootingCamera;
-        weapon.AimFollow = aimFollow;
         weapon.transform.SetParent(weaponSlots[weaponSlotIndex], false);
         Adjust();
 
@@ -156,8 +156,8 @@ public class ActiveWeapon : MonoBehaviour
         if (!Input.GetMouseButton(1) || aimedAndNotPulled)
         {        
             //Debug.Log("BOOM2");
-            bool isHolstered = rigController.GetBool("holstering");
-            if (isHolstered)
+            bool Holstered = rigController.GetBool("holstering");
+            if (Holstered)
             {
                 StartCoroutine(ActivateWeapon(activeWeaponIndex));
             }
@@ -184,18 +184,18 @@ public class ActiveWeapon : MonoBehaviour
     IEnumerator SwitchWeapon (int activeIndex, int holsterIndex)
     {
        // Debug.Log("2");
+        activeWeaponIndex = activeIndex;
         yield return StartCoroutine(HolsterWeapon(holsterIndex));
         yield return StartCoroutine(ActivateWeapon(activeIndex));
-        activeWeaponIndex = activeIndex;
     }
 
     IEnumerator HolsterWeapon (int index)
     {
-        isHolstered = true;
         var weapon = GetWeapon(index);
         if (weapon)
         {
-           // Debug.Log("4");
+            //Debug.Log("4");
+            weapon.Holstered = true;
             rigController.SetBool("holstering", true);
             
             do
@@ -207,7 +207,8 @@ public class ActiveWeapon : MonoBehaviour
 
     IEnumerator ActivateWeapon (int index)
     {
-        var weapon = GetWeapon(index);
+        var weapon = GetWeapon(index);            
+        weapon.Holstered = false;
         if (weapon)
         {
             rigController.SetBool("holstering",false);
@@ -217,7 +218,7 @@ public class ActiveWeapon : MonoBehaviour
             {
                 yield return new WaitForEndOfFrame();
             } while (rigController.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
-            isHolstered = false;
+
         }
     }
 }
