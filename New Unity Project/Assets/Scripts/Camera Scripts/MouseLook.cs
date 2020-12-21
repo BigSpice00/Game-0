@@ -9,6 +9,8 @@ public class MouseLook : MonoBehaviour
     public Transform playerCam;
     float xRotation = 0f;
     public GameObject AimCamera;
+    public ActiveWeapon weapon;
+    public bool shooting = false;
 
     void Start()
     {
@@ -25,6 +27,13 @@ public class MouseLook : MonoBehaviour
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -80f, 80f);
             playerBody.Rotate(Vector3.up * mouseX);
+            if (shooting)
+            {
+            xRotation -= 50f * Time.deltaTime;
+            Debug.Log("pew pew");
+            }
+            
+
             playerCam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         }
         else
@@ -34,4 +43,8 @@ public class MouseLook : MonoBehaviour
         
 
     }
+    //public void shootingp(bool pp)
+    //{
+    //    shooting = pp;
+    //}
 }

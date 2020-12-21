@@ -11,9 +11,10 @@ public class ActiveWeapon : MonoBehaviour
         Primary = 0,
         Secondary = 1
     }
-    Gun[] equipedWeapon = new Gun[2];
+    public Gun[] equipedWeapon = new Gun[2];
     int activeWeaponIndex;
     public Transform[] weaponSlots;
+    public MouseLook CameraBoi;
     public Transform LeftGrip;
     public Transform RightGrip;
     public GameObject concreteBulletHole;
@@ -23,6 +24,8 @@ public class ActiveWeapon : MonoBehaviour
     public GameObject softBulletHole;
     public GameObject dirtBulletHole;
     public Camera ShootingCamera;
+    public GameObject aimFollow;
+    public bool isItShooting = false;
     //public Rig handIK;
     public Animator rigController;
     bool isHolstered = false;
@@ -62,6 +65,20 @@ public class ActiveWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(activeWeaponIndex != -1)
+        {
+            if (equipedWeapon[activeWeaponIndex].IsItShooting())
+            {
+                CameraBoi.shooting = true;
+                Debug.Log("pp");
+            }
+            else
+            {
+                CameraBoi.shooting = false;
+            }
+        }
+        
         if (GetWeapon(activeWeaponIndex))
         {
             equipedWeapon[activeWeaponIndex].IsItHolstered(isHolstered);
@@ -125,6 +142,7 @@ public class ActiveWeapon : MonoBehaviour
         weapon.softBulletHole = softBulletHole;
         weapon.dirtBulletHole = dirtBulletHole;
         weapon.ShootingCamera = ShootingCamera;
+        weapon.AimFollow = aimFollow;
         weapon.transform.SetParent(weaponSlots[weaponSlotIndex], false);
         Adjust();
 

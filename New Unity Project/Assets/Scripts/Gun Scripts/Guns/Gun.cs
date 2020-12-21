@@ -8,10 +8,12 @@ public class Gun : MonoBehaviour
     #region Singleton
 
     public static Gun instance;
+    public GameObject AimFollow;
 
     void Awake()
     {
         instance = this;
+        //weaponRecoil.setAimFollow(AimFollow);
     }
 
     #endregion
@@ -43,6 +45,12 @@ public class Gun : MonoBehaviour
    
 
     [Space(10)]
+    [Header("Recoil")]
+    public WeaponRecoil weaponRecoil;
+    public MouseLook CameraBoi;
+
+
+    [Space(10)]
     [Header("Other")]
     public ActiveWeapon.WeaponSlots weaponSlots;
     public Camera ShootingCamera;
@@ -57,16 +65,19 @@ public class Gun : MonoBehaviour
     {
         Holstered = true;
         playerControllerScript = PlayerController.instance;
+        weaponRecoil = GetComponent<WeaponRecoil>();
     }
 
     void Update ()
     {
+        //CameraBoi.shootingp(Shooting);
         
         if (readyToShootTimer > 0)
         {
             readyToShootTimer = readyToShootTimer - Time.deltaTime;
+            Shooting = false;
         }
-        if (Input.GetMouseButton(1) && playerControllerScript.IsItGrounded() && playerControllerScript.IsReadyToShoot() && !Holstered)
+        if (Input.GetMouseButton(1) && playerControllerScript.IsItGrounded() && playerControllerScript.IsReadyToShoot() && !Holstered && readyToShootTimer <= 0)
         {
 
             if (IsItFullAuto)
@@ -84,7 +95,6 @@ public class Gun : MonoBehaviour
                     Shoot();
                 }
             }
-            Shooting = true;
         }
         else
         {
@@ -98,12 +108,15 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         if(readyToShootTimer <= 0) {
+            readyToShootTimer = 1 / RateOfFirePerSecond;
+            Shooting = true;
             var tracer = Instantiate(TracerEffect, muzzleOrigin.transform.position, Quaternion.identity);
             tracer.AddPosition(muzzleOrigin.transform.position);
             foreach (ParticleSystem Muzzle in muzzleFlash)
             {
                 Muzzle.Emit(1);
             }
+            AimFollow.transform.rotation = Quaternion.Euler(new Vector3(AimFollow.transform.rotation.x + 100f, AimFollow.transform.rotation.y, AimFollow.transform.rotation.z));
 
             RaycastHit hit;
         if(Physics.Raycast(ShootingCamera.transform.position, ShootingCamera.transform.forward, out hit, range, ~IgnoreHuman))
@@ -119,7 +132,7 @@ public class Gun : MonoBehaviour
                 {
                     hit.rigidbody.AddForce(-hit.normal * bulletForceOnImpact);
                 }
-                readyToShootTimer = 1 / RateOfFirePerSecond;
+                
                 tracer.transform.position = hit.point;
 
                 if (hit.collider.gameObject.tag == "Dirt")
