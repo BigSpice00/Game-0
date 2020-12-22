@@ -15,6 +15,14 @@ public class Gun : MonoBehaviour
     public float bulletForceOnImpact = 30f;
 
     [Space(10)]
+    [Header("Recoil")]
+    public float verticalRecoilValue = 25f;
+    public float horozontalRecoilValue = 0.5f;
+    public float recoilDuration = 0.5f;
+    //public MouseLook CameraBoi;
+    public Cinemachine.CinemachineImpulseSource cameraShake;
+
+    [Space(10)]
     [Header("GFX")]
     public ParticleSystem[] muzzleFlash;
     public GameObject concreteBulletHole;
@@ -29,15 +37,6 @@ public class Gun : MonoBehaviour
     public GameObject muzzleOrigin;
     public string weaponAnimation;
    
-
-    [Space(10)]
-    [Header("Recoil")]
-    public float verticalRecoilValue = 25f;
-    public float horozontalRecoilValue = 0.5f;
-    //public MouseLook CameraBoi;
-    public Cinemachine.CinemachineImpulseSource cameraShake;
-
-
     [Space(10)]
     [Header("Other")]
     public ActiveWeapon.WeaponSlots weaponSlots;
@@ -47,13 +46,6 @@ public class Gun : MonoBehaviour
     PlayerController playerControllerScript;
     public bool Shooting = false;
     public bool Holstered = true;
-
-
-    void Awake()
-    {
-        //weaponRecoil.setAimFollow(AimFollow);
-        
-    }
     
     void Start()
     {
@@ -120,6 +112,7 @@ public class Gun : MonoBehaviour
             if(target != null)
             {
                 target.TakeDamage(Damage);
+                target.attacked(range);
             }
             if(hit.rigidbody != null)
                 {
@@ -178,8 +171,3 @@ public class Gun : MonoBehaviour
     }
 
     }
-
-
-
-
-

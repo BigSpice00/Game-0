@@ -751,8 +751,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 10
   range: 100
-  RateOfFirePerSecond: 5
-  IsItFullAuto: 1
+  RateOfFirePerSecond: 2
+  IsItFullAuto: 0
   listeningDropOff: 2
   Silenced: 0
   bulletForceOnImpact: 300
@@ -771,9 +771,9 @@ MonoBehaviour:
   TracerEffect: {fileID: 6901889369599237752, guid: afe5fa3ca0ffc2944b17a6422a0b55ef, type: 3}
   muzzleOrigin: {fileID: 1717669085266652543}
   weaponAnimation: Python
-  verticalRecoilValue: 25
+  verticalRecoilValue: 100
   horozontalRecoilValue: 0.5
-  CameraBoi: {fileID: 0}
+  recoilDuration: 0.5
   cameraShake: {fileID: 0}
   weaponSlots: 1
   ShootingCamera: {fileID: 0}

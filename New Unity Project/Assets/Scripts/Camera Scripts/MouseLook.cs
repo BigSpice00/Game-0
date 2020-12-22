@@ -11,10 +11,12 @@ public class MouseLook : MonoBehaviour
     public GameObject AimCamera;
     public ActiveWeapon weapon;
     public bool shooting = false;
-    public bool stoppedShootingCounter = false;
+    //public bool stoppedShootingCounter = false;
     public float horozontalRecoil;
     public float verticalRecoil;
     public float horozontalRecoilValue;
+    public float recoilDuration = 0f;
+    public float time;
 
     void Start()
     {
@@ -36,11 +38,18 @@ public class MouseLook : MonoBehaviour
             playerBody.Rotate(Vector3.up * mouseX);
             if (shooting)
             {
-                xRotation -= verticalRecoil * Time.deltaTime;
-                horozontalRecoilValue += Random.Range(-horozontalRecoil, horozontalRecoil);
-                stoppedShootingCounter = true;
+                time = recoilDuration;
             }
             
+            if(time > 0)
+            {
+                xRotation = xRotation - (((verticalRecoil/1000) * Time.deltaTime) / recoilDuration);
+                horozontalRecoilValue += (Random.Range(-horozontalRecoil/10, horozontalRecoil/10f) * Time.deltaTime) / recoilDuration;
+                horozontalRecoil = Mathf.Clamp(xRotation, -20f, 20f);
+                //stoppedShootingCounter = true;
+
+                time -= Time.deltaTime;
+            }
 
             playerCam.transform.localRotation = Quaternion.Euler(xRotation, horozontalRecoilValue, 0f);
         }

@@ -16715,14 +16715,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b19e19935fb2274bb05f36830d1243e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AimFollow: {fileID: 0}
   Damage: 10
   range: 100
   RateOfFirePerSecond: 19
   IsItFullAuto: 1
-  listeningDropOff: 2
-  Silenced: 0
+  listeningDropOff: 0.5
+  Silenced: 1
   bulletForceOnImpact: 30
+  verticalRecoilValue: 35
+  horozontalRecoilValue: 1.2
+  recoilDuration: 0.1
+  cameraShake: {fileID: 0}
   muzzleFlash:
   - {fileID: 8296810599956407016}
   - {fileID: 8296810599956407020}
@@ -16738,7 +16741,6 @@ MonoBehaviour:
   TracerEffect: {fileID: 6901889369599237752, guid: afe5fa3ca0ffc2944b17a6422a0b55ef, type: 3}
   muzzleOrigin: {fileID: 8296810600096847137}
   weaponAnimation: M4A1
-  CameraBoi: {fileID: 0}
   weaponSlots: 0
   ShootingCamera: {fileID: 0}
   IgnoreHuman:

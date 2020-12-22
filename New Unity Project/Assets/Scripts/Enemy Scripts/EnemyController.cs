@@ -20,17 +20,19 @@ public class EnemyController : MonoBehaviour
     public float TimeBetweenAttacksLeft = 0f;
     [Space(10)]
 
+    ActiveWeapon activeWeaponScript;
     Transform target;
     NavMeshAgent agent;
     PlayerController playerControllerScript;
     //Gun gun;
     public float lookRadiusTemp;
-    //float timeAfterShot = 0;
+    float timeAfterShot = 0;
 
     void Start()
     {
         lookRadiusTemp = LookRadius;
         target = PlayerManager.instance.Player.transform;
+        activeWeaponScript = ActiveWeaponCaller.instance.activeWeapon;
         agent = GetComponent<NavMeshAgent>();
         playerControllerScript = PlayerController.instance;
         //gun = Gun.instance;
@@ -50,17 +52,17 @@ public class EnemyController : MonoBehaviour
         }
 
 
-            float distance = Vector3.Distance(target.position, transform.position);
+        float distance = Vector3.Distance(target.position, transform.position);
 
         if (distance <= LookRadius)
         {
             agent.SetDestination(target.position);
 
-            if(distance <= agent.stoppingDistance)
+            if (distance <= agent.stoppingDistance)
             {
                 FaceTarget();
 
-                if(TimeBetweenAttacksLeft <= 0) 
+                if (TimeBetweenAttacksLeft <= 0)
                 {
                     playerControllerScript.TakeDamage(Damage);
                     TimeBetweenAttacksLeft = TimeBetweenAttacks;
@@ -70,7 +72,7 @@ public class EnemyController : MonoBehaviour
             }
         }
         //Attempt at noise attraction from gun
-        /*if(timeAfterShot < 0)
+        if(timeAfterShot <= 0)
         {
             LookRadius = lookRadiusTemp;
             timeAfterShot = 0;
@@ -79,11 +81,11 @@ public class EnemyController : MonoBehaviour
         {
             timeAfterShot = timeAfterShot - Time.deltaTime;
         }
-        if (gun.IsItShooting() && gun.IsItNotSilenced() && gun.WhatsListeningRange() <= distance)
+        if (activeWeaponScript.isItShooting && !(activeWeaponScript.Silenced) && activeWeaponScript.listeningRange >= distance)
         {
-            LookRadius = gun.WhatsListeningRange();
+            LookRadius = activeWeaponScript.listeningRange;
             timeAfterShot = 1f;
-        } */
+        } 
     }
 
     public void TakeDamage (float Damage)
@@ -94,6 +96,11 @@ public class EnemyController : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void attacked(float range)
+    {
+        LookRadius = range / 2f;
     }
 
      void Die()

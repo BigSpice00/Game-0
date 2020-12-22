@@ -27,7 +27,9 @@ public class ActiveWeapon : MonoBehaviour
     public bool isItShooting = false;
     //public Rig handIK;
     public Animator rigController;
-    bool isHolstered = false;
+    public bool isHolstered = false;
+    public bool Silenced = false;
+    public float listeningRange = 0f;
     Gun GetWeapon(int index)
     {
         if (index < 0 || index >= equipedWeapon.Length)
@@ -71,11 +73,16 @@ public class ActiveWeapon : MonoBehaviour
             {
                 CameraBoi.verticalRecoil = equipedWeapon[activeWeaponIndex].verticalRecoilValue;
                 CameraBoi.horozontalRecoil = equipedWeapon[activeWeaponIndex].horozontalRecoilValue;
+                CameraBoi.recoilDuration = equipedWeapon[activeWeaponIndex].recoilDuration;
                 CameraBoi.shooting = true;
+                listeningRange = equipedWeapon[activeWeaponIndex].range / equipedWeapon[activeWeaponIndex].listeningDropOff;
+                Silenced = equipedWeapon[activeWeaponIndex].Silenced;
+                isItShooting = true;
             }
             else
             {
                 CameraBoi.shooting = false;
+                isItShooting = false;
             }        
             if (equipedWeapon[activeWeaponIndex])
             {

@@ -1737,7 +1737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &424198776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4523,7 +4523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   Resistance: 15
-  LookRadius: 37.31
+  LookRadius: 1
   LookingSpeed: 5
   Damage: 5
   TimeBetweenAttacks: 5
@@ -6855,10 +6855,11 @@ MonoBehaviour:
   AimCamera: {fileID: 1033886039}
   weapon: {fileID: 0}
   shooting: 0
-  stoppedShootingCounter: 0
   horozontalRecoil: 0
   verticalRecoil: 0
   horozontalRecoilValue: 0
+  recoilDuration: 0
+  time: 0
 --- !u!114 &1033886043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7307,7 +7308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1066638483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25254,6 +25255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1622243688}
   - component: {fileID: 1622243687}
+  - component: {fileID: 1622243689}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -25288,6 +25290,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1622243689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622243686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08420617f5cb1394385520e561e83049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeWeapon: {fileID: 8296172668072534875}
 --- !u!1 &1622650699
 GameObject:
   m_ObjectHideFlags: 0
@@ -116458,6 +116473,9 @@ MonoBehaviour:
   ShootingCamera: {fileID: 1905346680}
   isItShooting: 0
   rigController: {fileID: 729409813}
+  isHolstered: 0
+  Silenced: 0
+  listeningRange: 0
 --- !u!198 &8350317979286245961
 ParticleSystem:
   m_ObjectHideFlags: 0
