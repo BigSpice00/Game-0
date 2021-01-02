@@ -15,7 +15,6 @@ public class MoveToNextArea : MonoBehaviour
         float distance = Vector3.Distance(MoveCube.transform.position, transform.position);
         if (distance > 0.56f && !oppisiteLeg.GetComponent<MoveToNextArea>().ismoving())
         {
-            //transform.position = Vector3.Lerp(transform.position, MoveCube.transform.position + new Vector3(0f, +0.5f, 0f), Time.deltaTime * LegMoveSpeed);
             transform.position = Vector3.Lerp(transform.position, MoveCube.transform.position + new Vector3(0f, 0.2f, 0f), Time.deltaTime * LegMoveSpeed);
             OrginalPosition = transform.position;
             moving = true;
@@ -24,10 +23,7 @@ public class MoveToNextArea : MonoBehaviour
         else
         {
             transform.position = Vector3.Lerp(transform.position, new Vector3(OrginalPosition.x, MoveCube.transform.position.y - 0.5f, OrginalPosition.z), Time.deltaTime * 30f);
-
-            
             moving = false;
-
         }
 
 
